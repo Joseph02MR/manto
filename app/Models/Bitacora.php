@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Bitacora extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'tabla_afectada',
+        'tipo_operacion',
+        'fecha',
+        'id'
+    ];
 }
