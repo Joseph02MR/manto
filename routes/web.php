@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('template');
+})->name('template');
 
 Route::get('/welcome', function () {
     return view('WelcomeHome');
 });
+
+//Rutas para usuarios xd:
+Route::get('/usuarios', [UserController::class, 'index']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+
