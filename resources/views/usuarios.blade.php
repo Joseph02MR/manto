@@ -18,10 +18,9 @@
                 <tr>
                     <td>{{ $usuario['correo'] }}</td>
                     <td>{{ $usuario['nombre'] }}</td>
-                    <td>{{ $usuario['id_departamento'] }}</td>
+                    <td>{{ $usuario['departameto'] }}</td>
                     <td>
-                        <a  class="btn btn-info">Ver</a>
-                        <a class="btn btn-warning">Editar</a>
+                        <a href="{{ route('usuario.editview') }}" class="btn btn-warning">Editar</a>
                         <form method="POST" style="display: inline-block;">
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?')">Eliminar</button>
                         </form>

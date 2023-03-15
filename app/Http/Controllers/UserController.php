@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->baseUri = 'https://sustaining-lemon-treatment.glitch.me/api/v1/usuario';
+        $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario';
     }
 
     public function index()
