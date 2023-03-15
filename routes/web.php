@@ -25,4 +25,5 @@ Route::get('/welcome', function () {
 Route::get('/usuarios', [UserController::class, 'index']);
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 
