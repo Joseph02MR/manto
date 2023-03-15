@@ -20,3 +20,12 @@ Route::get('/', function () {
 Route::get('/welcome', function () {
     return view('WelcomeHome');
 });
+
+//Rutas para usuarios xd:
+Route::get('/usuarios', [UserController::class, 'index']);
+Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
+
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+
+
