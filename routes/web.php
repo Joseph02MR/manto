@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/welcome', function () {
     return view('WelcomeHome');
-});
+})->name('welcome');
 
 //Rutas para usuarios xd:
 Route::get('/usuarios', [UserController::class, 'index']);

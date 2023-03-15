@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->baseUri = 'https://sustaining-lemon-treatment.glitch.me/api/v1/usuario';
+        $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario';
     }
 
     public function index()
@@ -32,8 +32,8 @@ class UserController extends Controller
     
             if ($response->status() === 200) {
                 // Si se autenticó correctamente, guardar información en la sesión y redirigir
-                //session(['user' => $response['usuario']]); //Aun no investigo como funcionan las "Session" en laravel
-                return redirect()->route('template');
+                session(['user' => $response['usuario']]); //Aun no investigo como funcionan las "Session" en laravel
+                return redirect()->route('welcome');
             } else {
                 // Si no se autenticó correctamente, mostrar mensaje de error
                 return back()->with('error', 'Credenciales inválidas');
