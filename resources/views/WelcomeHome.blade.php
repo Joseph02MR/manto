@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login Page</title>
+	<title>Welcome</title>
    <!--Made with love by Mutiullah Samim -->
    
 	<!--Bootsrap 4 CDN-->
@@ -17,41 +17,48 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div class="container">
-	<div class="d-flex justify-content-center h-100">
-		<div class="card">
-			<div class="card-header">
-				<h3>Sign In</h3>
-			</div>
-			<div class="card-body">
-				<form>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
+<div class="container" style="display: flex;align-items: center;">
+	<div class="col">
+		<div class="d-flex flex-row" style="justify-content: center">
+			<h1 style="color: bisque">Welcome again, sign in!</h1>
+		</div>
+		<div class="d-flex flex-row" style="justify-content: center">
+			<div class="d-flex justify-content-center">
+				<div class="card">
+					<div class="card-header">
+						<h3>Sign In</h3>
+					</div>
+					<div class="card-body">
+						<form>
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fas fa-user"></i></span>
+								</div>
+								<input type="text" class="form-control" placeholder="username">
+								
+							</div>
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fas fa-key"></i></span>
+								</div>
+								<input type="password" class="form-control" placeholder="password">
+							</div>
+							<div class="row align-items-center remember">
+								<input type="checkbox">Remember Me
+							</div>
+							<div class="form-group">
+								<input type="submit" value="Login" class="btn float-right login_btn">
+							</div>
+						</form>
+					</div>
+					<div class="card-footer">
+						<div class="d-flex justify-content-center links">
+							Don't have an account?<a href="#">Sign Up</a>
 						</div>
-						<input type="text" class="form-control" placeholder="username">
-						
-					</div>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						<div class="d-flex justify-content-center">
+							<a href="#">Forgot your password?</a>
 						</div>
-						<input type="password" class="form-control" placeholder="password">
 					</div>
-					<div class="row align-items-center remember">
-						<input type="checkbox">Remember Me
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Login" class="btn float-right login_btn">
-					</div>
-				</form>
-			</div>
-			<div class="card-footer">
-				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
-				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
 				</div>
 			</div>
 		</div>

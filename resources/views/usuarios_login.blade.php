@@ -21,45 +21,52 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Login</h3>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('usuarios.login') }}">
-                        @csrf
+    <div class="container" style="display: flex;align-items: center;">
+        <div class="col">
+            <div class="d-flex flex-row" style="justify-content: center">
+                <h1 style="color: bisque">Hello mate, Login!</h1>
+            </div>
+            <div class="d-flex flex-row" style="justify-content: center">
+                <div class="d-flex justify-content-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('usuarios.login') }}">
+                                @csrf
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input name="correo" type="text" class="form-control" placeholder="email user">
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input name="correo" type="text" class="form-control" placeholder="email user">
 
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input name="contrasena" type="password" class="form-control"
+                                        placeholder="password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn float-right login_btn">
+                                </div>
+                            </form>
                         </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center links">
+                                Don't have an account?<a href="{{ route('welcome') }}">Sign Up</a>
                             </div>
-                            <input name="contrasena" type="password" class="form-control" placeholder="password">
+                            <div class="d-flex justify-content-center">
+                                <a href="#">Forgot your password?</a>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn float-right login_btn">
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Don't have an account?<a href="{{ route('welcome')}}">Sign Up</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">Forgot your password?</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('template');
+    return view('WelcomeHome');
 })->name('template');
 
 Route::get('/welcome', function () {
