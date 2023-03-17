@@ -38,6 +38,9 @@ Route::get('/mantenimiento', function () {
 Route::get('/orden_manto', function () {
     return view('orden_mantenimiento');
 });
+Route::get('/detalles_maquina', function () {
+    return view('detalles_maquina');
+});
 
 //Rutas para usuarios xd:
 Route::get('/usuarios', [UserController::class, 'index']);
