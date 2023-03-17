@@ -14,9 +14,15 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('main_page');
+    return view('template');
 })->name('template');
 
+Route::get('/test', function () {
+    return view('test');
+})->name('test');
+
+
+// TODO: renombrar ruta
 Route::get('/welcome', function () {
     return view('WelcomeHome');
 })->name('welcome');
@@ -26,4 +32,6 @@ Route::get('/usuarios', [UserController::class, 'index']);
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+
+//TODO: agregar contenido, hacia llamada a vista inexistente
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');

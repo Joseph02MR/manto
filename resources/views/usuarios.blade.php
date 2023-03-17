@@ -1,4 +1,9 @@
-@extends('template')
+@extends('templates.main')
+
+@section('head')
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.css')}}">
+@endsection
 
 @section('content')
 <div class="container">
@@ -32,4 +37,8 @@
     </table>
     {{ $usuarios->links() }}
 </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ URL::asset('../js/bootstrap.min.js')}}"></script>
 @endsection
