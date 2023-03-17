@@ -1,9 +1,14 @@
-@extends('template')
+@extends('templates.main')
+
+@section('head')
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.css')}}">
+@endsection
 
 @section('content')
 <div class="container">
     <h1>Editar Usuario</h1>
-    <form action="update.php" method="post">
+    <form action="update" method="POST">
         <label for="departamento">Departamento:</label>
         <select class="form-control">
             <option>Mantenimiento</option>
@@ -26,6 +31,6 @@
 
         <input type="submit" value="Update">
         <a href="{{ url()->previous() }}" class="btn btn-error">Cancelar</a>
-      </form>
+    </form>
 </div>
 @endsection
