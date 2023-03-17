@@ -35,11 +35,16 @@ Route::get('/mantenimiento', function () {
     return view('mantenimientoAdmin');
 });
 
+Route::get('/orden_manto', function () {
+    return view('orden_mantenimiento');
+});
+
 //Rutas para usuarios xd:
 Route::get('/usuarios', [UserController::class, 'index']);
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+
 
 //TODO: agregar contenido, hacia llamada a vista inexistente
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
