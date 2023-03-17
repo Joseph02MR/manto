@@ -8,7 +8,6 @@
     <!--Made with love by Mutiullah Samim -->
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/icomoon.css">
     @yield('head')
 </head>
 
@@ -27,10 +26,15 @@
 
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#"><i class="fa fa-fw fa-home">About</a>
-        <a href="#"><i class="fa fa-fw fa-wrench">Services</a>
-        <a href="#"><i class="fa fa-fw fa-user">Clients</a>
-        <a href="#"><i class="fa fa-fw fa-envelope">Contact</a>
+        
+        <a href="#">Máquinas</a>    
+        @if ($permisos)
+            <a href="#">Permisos</a>    
+        @endif
+        @if (!$permisos)
+            <a href="#">Permisos</a>    
+        @endif
+        
     </div>
 
     @yield('content')

@@ -10,10 +10,12 @@ use Illuminate\Support\Collection;
 class UserController extends Controller
 {
     private $baseUri;
+    private $maquinas;
 
     public function __construct()
     {
         $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario';
+        $this->maquinas = 'https://boom-phrygian-sceptre.glitch.me/api/v1/maquina/user/';
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -31,6 +33,15 @@ class UserController extends Controller
         $usuarios->setPath('usuarios');
         return view('usuarios', compact('usuarios'));
     }
+
+    public function maquinas(){
+        $id = session()->get('user');
+        $api_route = $this->maquinas.$id['id_usuario'];
+        $response = Http::get($api_route);
+        $maquinas = $response->json();
+        $permisos = session()->get('permiso');
+        return view('maquinas', compact('maquinas', 'permiso'));
+    }
     
     public function login(Request $request)
     {
@@ -42,8 +53,9 @@ class UserController extends Controller
     
             if ($response->status() === 200) {
                 // Si se autenticó correctamente, guardar información en la sesión y redirigir
-                session(['user' => $response['usuario']]); //Aun no investi-go como funcionan las "Session" en laravel
-                return redirect()->route('welcome');
+                session(['user' => $response['usuario']]);
+                session()->put('permiso',$response['permiso']); //Aun no investi-go como funcionan las "Session" en laravel
+                return redirect()->route('landing');
             } else {
                 // Si no se autenticó correctamente, mostrar mensaje de error
                 return back()->with('error', 'Credenciales inválidas');
