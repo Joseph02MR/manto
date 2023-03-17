@@ -27,6 +27,14 @@ Route::get('/welcome', function () {
     return view('WelcomeHome');
 })->name('welcome');
 
+Route::get('/editusuario', function () {
+    return view('editarusuario');
+})->name('usuario.editview');
+
+Route::get('/mantenimiento', function () {
+    return view('mantenimientoAdmin');
+});
+
 //Rutas para usuarios xd:
 Route::get('/usuarios', [UserController::class, 'index']);
 
