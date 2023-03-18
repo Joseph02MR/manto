@@ -1,9 +1,4 @@
-@extends('templates.main')
-
-@section('head')
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.css')}}">
-@endsection
+@extends('template')
 
 @section('content')
 <div class="container">

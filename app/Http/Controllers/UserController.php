@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class UserController extends Controller
 {
@@ -14,14 +16,22 @@ class UserController extends Controller
         $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario';
     }
 
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
     public function index()
     {
         $response = Http::get($this->baseUri);
         $usuarios = $response->json();
-        $usuarios = new Paginator($usuarios, 10);
+        $usuarios = $this->paginate($usuarios, 10);
+        $usuarios->setPath('usuarios');
         return view('usuarios', compact('usuarios'));
     }
-
+    
     public function login(Request $request)
     {
         if ($request->isMethod('POST')) {
