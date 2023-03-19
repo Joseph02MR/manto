@@ -39,6 +39,7 @@
             @if ($permiso == 'admin')
                 <a href="{{route('usuarios')}}">Usuarios</a>
                 <a href="#">Reportes</a>
+                <!--TODO: Definir vistas admin -->
             @endif
             @if ($permiso == 'manto')
                 <a href="">Mantenimientos</a>
