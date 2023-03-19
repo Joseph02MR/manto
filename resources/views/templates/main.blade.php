@@ -7,8 +7,8 @@
     @yield('title')
     <!--Made with love by Mutiullah Samim -->
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="css/main.css">
     @yield('head')
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -19,24 +19,33 @@
 
     <div class="navbar">
         <a href="#"><span style="font-size:15px;cursor:pointer" onclick="openNav()">&#9776;</span></a>
+        <a href="{{route('logout')}}" class="right">Cerrar sessión</a>
+       <!-- 
         <a href="#" class="right">Link</a>
         <a href="#" class="right">Link</a>
-        <a href="#" class="right">Link</a>
+       -->
     </div>
 
     <div id="mySidenav" class="sidenav">
+        @php
+            $permisos = null;
+            if (session('permisos') != null) {
+                $permisos = is_array(session('permisos')) ? session('permisos') : [session('permisos')];
+            }
+        @endphp
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        
-        <a href="#">Máquinas</a>    
-        @if ($permisos)
-            <a href="#">Permisos</a>    
-        @endif
-        @if (!$permisos)
-            <a href="#">Permisos</a>    
-        @endif
-        
-    </div>
+        <a href="{{route('landing')}}">Máquinas</a>
+        @foreach ($permisos as $permiso)
+            @if ($permiso == 'admin')
+                <a href="{{route('usuarios')}}">Usuarios</a>
+                <a href="#">Reportes</a>
+            @endif
+            @if ($permiso == 'manto')
+                <a href="">Mantenimientos</a>
+            @endif
+        @endforeach
 
+    </div>
     @yield('content')
 
     <div class="footer">

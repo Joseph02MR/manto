@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -14,8 +15,10 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario';
-        $this->maquinas = 'https://boom-phrygian-sceptre.glitch.me/api/v1/maquina/user/';
+        //$aux = 'https://boom-phrygian-sceptre.glitch.me';
+        $aux = 'http://localhost:8001';
+        $this->baseUri = $aux . '/api/v1/usuario';
+        $this->maquinas = $aux . '/api/v1/maquina/user';
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -27,6 +30,7 @@ class UserController extends Controller
 
     public function index()
     {
+        //TODO: VALIDAR PERMISOS DE ADMIN
         $response = Http::get($this->baseUri);
         $usuarios = $response->json();
         $usuarios = $this->paginate($usuarios, 10);
@@ -34,27 +38,31 @@ class UserController extends Controller
         return view('usuarios', compact('usuarios'));
     }
 
-    public function maquinas(){
+    public function maquinas()
+    {
         $id = session()->get('user');
-        $api_route = $this->maquinas.$id['id_usuario'];
-        $response = Http::get($api_route);
-        $maquinas = $response->json();
-        $permisos = session()->get('permiso');
-        return view('maquinas', compact('maquinas', 'permiso'));
+        if (isset($id)) {
+            $api_route = $this->maquinas . '/' . $id['id_usuario'];
+            $response = Http::get($api_route);
+            $maquinas = $response->json();
+            //$permisos = session()->get('permisos');
+            return view('maquinas', compact('maquinas'));
+        }
+        return redirect()->route('redirect_login');
     }
-    
+
     public function login(Request $request)
     {
         if ($request->isMethod('POST')) {
-            $response = Http::post($this->baseUri.'/login', [
+            $response = Http::post($this->baseUri . '/login', [
                 'correo' => $request->input('correo'),
                 'contrasena' => $request->input('contrasena'),
             ]);
-    
+
             if ($response->status() === 200) {
                 // Si se autenticó correctamente, guardar información en la sesión y redirigir
                 session(['user' => $response['usuario']]);
-                session()->put('permiso',$response['permiso']); //Aun no investi-go como funcionan las "Session" en laravel
+                session()->put('permisos', $response['permiso']); //Aun no investi-go como funcionan las "Session" en laravel
                 return redirect()->route('landing');
             } else {
                 // Si no se autenticó correctamente, mostrar mensaje de error
@@ -62,6 +70,12 @@ class UserController extends Controller
             }
         }
         return view('usuarios_login');
+    }
+
+    public function logout()
+    {
+        session()->forget('user');
+        return redirect()->route('redirect_login');
     }
 
     public function create()
@@ -98,4 +112,3 @@ class UserController extends Controller
         return redirect()->route('usuarios.index');
     }
 }
-

@@ -1,5 +1,9 @@
 @extends('templates.main')
 
+@section('title')
+    <title>Máquinas</title>
+@endsection
+
 @section('head')
 	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.css')}}">
@@ -7,12 +11,16 @@
 
 @section('content')
 <div class="container">
-    <h1>Usuarios</h1>
-    <a href="#" class="btn btn-primary mb-3">Nuevo usuario</a>
+    <h1>Máquinas asignadas</h1>
+    @php
+        $permisos = is_array(session('permisos')) ? session('permisos') : array(session('permisos'));
+    @endphp
+    <br>
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
+                <th>No. Serie</th>
                 <th>Modelo</th>
                 <th>Marca</th>
                 <th>Departamento</th>
@@ -21,17 +29,16 @@
             </tr>
         </thead>
         <tbody>
-            @php
-                $renglon = 1
-            @endphp
-            @foreach($permisos as $permiso)
+            @php($renglon = 1)
+            @foreach($maquinas as $maquina)
                 <tr>
                     <td>{{ $renglon }}</td>
-                    <td> Modelo</td>
-                    <td> Máquina</td>
-                    <td> Depto</td>
-                    <td> Manto</td>
-                    <td> Botones
+                    <td>{{$maquina['no_serie']}}</td>
+                    <td>{{$maquina['modelo']}}</td>
+                    <td>{{$maquina['marca']}}</td>
+                    <td>{{$maquina['departameto']}}</td>
+                    <td>{{substr($maquina['fecha_anual'], 0,10)}}</td>
+                    <td>¯⁠\_⁠⁠(⁠ツ⁠)_⁠⁠/⁠¯
                         <!--<a href="" class="btn btn-warning">Editar</a>-->
                     </td>
                 </tr>
@@ -39,8 +46,8 @@
             @endforeach
         </tbody>
     </table>
-    {{ $usuarios->links() }}
 </div>
+<div class="vertical-padding"></div>
 @endsection
 
 @section('scripts')

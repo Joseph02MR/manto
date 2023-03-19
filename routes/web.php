@@ -14,8 +14,10 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('maquinas',[UserController::class,'maquinas']);
-})->name('landing');
+    return redirect()->route('login');
+})->name('redirect_login');
+
+Route::get('/main', [UserController::class, 'maquinas'])->name('landing');
 
 Route::get('/test', function () {
     return view('test');
@@ -36,10 +38,12 @@ Route::get('/mantenimiento', function () {
 });
 
 //Rutas para usuarios xd:
-Route::get('/usuarios', [UserController::class, 'index']);
+Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
-Route::post('/login',[UserController::class,'login'])->name('usuarios.login');
+Route::post('/login', [UserController::class, 'login'])->name('usuarios.login');
+
+Route::get('/logout',[UserController::class, 'logout'])->name('logout');
 
 //TODO: agregar contenido, hacia llamada a vista inexistente
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');

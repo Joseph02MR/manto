@@ -204,7 +204,12 @@ body {
   font-size: 20px;
 }
 
+/*++++++ CUSTOM UTIL CLASSES*/
 
+.vertical-padding{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 
 /*++++++ BOOTSTRAP UTIL CLASSES*/
 .text-center {
