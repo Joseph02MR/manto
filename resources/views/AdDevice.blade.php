@@ -1,5 +1,9 @@
 @extends('templates.main')
 
+@section('head')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+@endsection
 @section('content')
 <div class="container">
     <h1>Agregar Dispositivo</h1>
@@ -73,8 +77,8 @@
             </div>
             <hr>
             <div class="col-sm-6">
-                <input type="submit" value="Insert">
-                <a href="{{ url()->previous() }}" class="btn btn-error">Cancelar</a>
+                <input type="submit" class="btn btn-success" value="Insert">
+                <a href="{{ route('maquinas.admin') }}" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
         

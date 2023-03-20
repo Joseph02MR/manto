@@ -43,16 +43,9 @@ Route::get('/editusuario', function () {
     return view('editarusuario');
 })->name('usuario.editview');
 
-
-
-
-Route::get('/dispositivo', function () {
-    return view('AdDevice');
-});
-
 Route::get('/reportes', function () {
     return view('reportes');
-});
+})->name('reportes');
 
 Route::get('/orden_manto', function () {
     return view('orden_mantenimiento');
