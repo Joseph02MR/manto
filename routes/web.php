@@ -18,11 +18,19 @@ Route::get('/', function () {
 })->name('redirect_login');
 
 Route::get('/main', [UserController::class, 'maquinas'])->name('landing');
+Route::get('/maquinas', [UserController::class, 'maquinas_admin'])->name('maquinas.admin');
+Route::get('/maquinas_nueva', function () {
+    return view('AdDevice');
+})->name('maquinas.nueva');
 
 Route::get('/test', function () {
     return view('test');
 })->name('test');
 
+Route::get('/manto', [UserController::class, 'mantos'])->name('manto');
+Route::PATCH('/manto', [UserController::class, 'update_manto_status'])->name('manto.status');
+
+Route::get('/bitacora', [UserController::class, 'bitacora'])->name('bitacora');
 
 // TODO: renombrar ruta
 Route::get('/welcome', function () {
@@ -39,10 +47,11 @@ Route::get('/mantenimiento', function () {
 
 Route::get('/orden_manto', function () {
     return view('orden_mantenimiento');
-});
+})->name('manto.nuevo');
+
 Route::get('/detalles_maquina', function () {
     return view('detalles_maquina');
-});
+})->name('manto.detalle');
 
 //Rutas para usuarios xd:
 Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');

@@ -34,15 +34,18 @@
             }
         @endphp
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="{{route('landing')}}">Máquinas</a>
+        <a href="{{route('landing')}}">Máquina usuario</a>
         @foreach ($permisos as $permiso)
             @if ($permiso == 'admin')
                 <a href="{{route('usuarios')}}">Usuarios</a>
+                <a href="{{route('manto')}}">Mantenimientos</a>
                 <a href="#">Reportes</a>
+                <a href="{{route('bitacora')}}">Bitácora</a>
+                <a href="{{route('maquinas.admin')}}">Máquinas</a>
                 <!--TODO: Definir vistas admin -->
             @endif
             @if ($permiso == 'manto')
-                <a href="">Mantenimientos</a>
+                <a href="{{route('manto')}}">Mantenimientos</a>
             @endif
         @endforeach
 

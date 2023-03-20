@@ -11,14 +11,14 @@ use Illuminate\Support\Collection;
 class UserController extends Controller
 {
     private $baseUri;
-    private $maquinas;
+    private $baseApiUri;
 
     public function __construct()
     {
         //$aux = 'https://boom-phrygian-sceptre.glitch.me';
         $aux = 'http://localhost:8001';
         $this->baseUri = $aux . '/api/v1/usuario';
-        $this->maquinas = $aux . '/api/v1/maquina/user';
+        $this->baseApiUri = $aux . '/api/v1';
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])
@@ -42,11 +42,62 @@ class UserController extends Controller
     {
         $id = session()->get('user');
         if (isset($id)) {
-            $api_route = $this->maquinas . '/' . $id['id_usuario'];
+            $api_route = $this->baseApiUri . '/maquina/user/' . $id['id_usuario'];
             $response = Http::get($api_route);
             $maquinas = $response->json();
-            //$permisos = session()->get('permisos');
             return view('maquinas', compact('maquinas'));
+        }
+        return redirect()->route('redirect_login');
+    }
+
+    public function maquinas_admin()
+    {
+        $id = session()->get('user');
+        if (isset($id)) {
+            $api_route = $this->baseApiUri . '/maquina';
+            $response = Http::get($api_route);
+            $maquinas = $response->json();
+            $maquinas = $this->paginate($maquinas, 20);
+            $maquinas->setPath('maquinas');
+            return view('maquinas_admin', compact('maquinas'));
+        }
+        return redirect()->route('redirect_login');
+    }
+
+    public function mantos()
+    {
+        $id = session()->get('user');
+        if (isset($id)) {
+            $api_route = $this->baseApiUri . '/manto_view';
+            $response = Http::get($api_route);
+            $mantos = $response->json();
+            return view('mantenimientos', compact('mantos'));
+        }
+        return redirect()->route('redirect_login');
+    }
+
+    public function update_manto_status(Request $request)
+    {
+        $api_route = $this->baseApiUri . '/manto_status';
+        $response = Http::patch($api_route, [
+            'id' => $request->input('id'),
+            'maquina' => $request->input('maquina')
+        ]);
+        if($response->status() === 200){
+            return back()->with('success', 'Actualización realizada');
+        }else{
+            return back()->with('error', 'Actualización fallida');
+        }
+    }
+
+    public function bitacora()
+    {
+        $id = session()->get('user');
+        if (isset($id)) {
+            $api_route = $this->baseApiUri . '/bitacora';
+            $response = Http::get($api_route);
+            $registros = $response->json();
+            return view('bitacora', compact('registros'));
         }
         return redirect()->route('redirect_login');
     }
