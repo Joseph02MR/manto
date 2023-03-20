@@ -15,8 +15,8 @@ class UserController extends Controller
 
     public function __construct()
     {
-        //$aux = 'https://boom-phrygian-sceptre.glitch.me';
-        $aux = 'http://localhost:8001';
+        $aux = 'https://boom-phrygian-sceptre.glitch.me';
+        //$aux = 'http://localhost:8001';
         $this->baseUri = $aux . '/api/v1/usuario';
         $this->baseApiUri = $aux . '/api/v1';
     }
