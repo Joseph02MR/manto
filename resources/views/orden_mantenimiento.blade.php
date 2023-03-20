@@ -8,6 +8,7 @@
 @section('content')
     <div class="container-fluid" style="height: 100vh; display: flex; align-items: center; text-align: right; padding-right: 380px ">
         <div class="col">
+            <form>
                 <div class="row" style="justify-content: center">
                     <h1>Mantenimiento</h1>
                 </div>
@@ -18,7 +19,6 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <select id="select_depto" class="form-control" name="">
-                                <option>Text</option>
                             </select>
                         </div>
                     </div>
@@ -30,28 +30,99 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <select id="select_maquina" class="form-control" name="">
-                                <option>Text</option>
+                                <option>Seleccione una opcion</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="justify-content: right; margin-right: 0">
-                    <button class="btn btn-success" type="button" style="margin-right: 15px">Levantar orden</button>
+                    <button id="btn-levantar-orden" class="btn btn-success" type="button" style="margin-right: 15px">Levantar orden</button>
                     <button class="btn btn-danger" type="button">Cancelar</button>
                 </div>
-            </div>
+            </form>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
-    <!-- Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script>
+        $(document).ready(function() {
+
+            $("#btn-levantar-orden").click(function() {
+                var id_maquina = $("#select_maquina").val();
+                if (id_maquina !== "") {
+                    var url = "http://localhost:8000/orden_manto/" + id_maquina;
+                    window.location.href = url;
+                } else {
+                    alert("Seleccione una maquina");
+                }
+            });
+        // Obtener los datos de la API utilizando AJAX
+        $.ajax({
+            url: "https://boom-phrygian-sceptre.glitch.me/api/v1/departamento",
+            type: "GET",
+            success: function(response) {
+            // Recorrer los datos y agregarlos al control select
+            for (var i = 0; i < response.length; i++) {
+                $("#select_depto").append(
+                "<option value='" +
+                    response[i].id_departamento +
+                    "'>" +
+                    response[i].departameto +
+                    "</option>"
+                );
+            }
+            },
+            error: function(xhr) {
+            console.log(xhr.responseText);
+            }
+        });
+
+        // Obtener las opciones del select de departamentos
+        var selectDeptos = $('#select_depto');
+        // Evento change del select de departamentos
+        // Evento change del select de departamentos
+        selectDeptos.change(function() {
+        var selectedDeptoId = selectDeptos.val();
+
+        // Llamada AJAX para obtener las máquinas del departamento seleccionado
+        $.ajax({
+            url: "https://boom-phrygian-sceptre.glitch.me/api/v1/maquina/depto/" + selectedDeptoId,
+            type: "GET",
+            success: function(response) {
+                // Vaciar el select de máquinas
+                $('#select_maquina').empty();
+
+                // Recorrer los datos y agregarlos al control select
+                for (var i = 0; i < response.length; i++) {
+                $('#select_maquina').append(
+                    "<option value='" +
+                    response[i].id_maquina +
+                    "'>" +
+                    response[i].no_serie + '-' +response[i].modelo+
+                    "</option>"
+                );
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+            });
+        });
+    });
+    </script>
 @endsection
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
