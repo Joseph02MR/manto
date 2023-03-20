@@ -7,9 +7,8 @@
     @yield('title')
     <!--Made with love by Mutiullah Samim -->
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/icomoon.css">
     @yield('head')
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -20,19 +19,37 @@
 
     <div class="navbar">
         <a href="#"><span style="font-size:15px;cursor:pointer" onclick="openNav()">&#9776;</span></a>
+        <a href="{{route('logout')}}" class="right">Cerrar sessión</a>
+       <!-- 
         <a href="#" class="right">Link</a>
         <a href="#" class="right">Link</a>
-        <a href="#" class="right">Link</a>
+       -->
     </div>
 
     <div id="mySidenav" class="sidenav">
+        @php
+            $permisos = null;
+            if (session('permisos') != null) {
+                $permisos = is_array(session('permisos')) ? session('permisos') : [session('permisos')];
+            }
+        @endphp
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#"><i class="fa fa-fw fa-home">About</a>
-        <a href="#"><i class="fa fa-fw fa-wrench">Services</a>
-        <a href="#"><i class="fa fa-fw fa-user">Clients</a>
-        <a href="#"><i class="fa fa-fw fa-envelope">Contact</a>
-    </div>
+        <a href="{{route('landing')}}">Máquina usuario</a>
+        @foreach ($permisos as $permiso)
+            @if ($permiso == 'admin')
+                <a href="{{route('usuarios')}}">Usuarios</a>
+                <a href="{{route('manto')}}">Mantenimientos</a>
+                <a href="#">Reportes</a>
+                <a href="{{route('bitacora')}}">Bitácora</a>
+                <a href="{{route('maquinas.admin')}}">Máquinas</a>
+                <!--TODO: Definir vistas admin -->
+            @endif
+            @if ($permiso == 'manto')
+                <a href="{{route('manto')}}">Mantenimientos</a>
+            @endif
+        @endforeach
 
+    </div>
     @yield('content')
 
     <div class="footer">
