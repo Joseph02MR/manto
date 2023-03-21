@@ -1,7 +1,7 @@
 @extends('templates.main')
 
 @section('title')
-    <title>Máquinas</title>
+    <title>Registro Histórico</title>
 @endsection
 
 @section('head')

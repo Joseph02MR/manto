@@ -1,5 +1,9 @@
 @extends('templates.main')
 
+@section('title')
+    <title>Usuarios</title>
+@endsection
+
 @section('head')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -8,7 +12,7 @@
 @section('content')
 <div class="container">
     <h1>Usuarios</h1>
-    <a href="{{ route('usuarios.create') }}" class="btn btn-primary mb-3">Nuevo usuario</a>
+    <a href="{{ route('usuarios.createview') }}" class="btn btn-primary mb-3">Nuevo usuario</a>
     <table class="table">
         <thead>
             <tr>
@@ -25,8 +29,9 @@
                     <td>{{ $usuario['nombre'] }}</td>
                     <td>{{ $usuario['departameto'] }}</td>
                     <td>
-                        <a href="{{ route('usuario.editview') }}" class="btn btn-warning">Editar</a>
-                        <form method="POST" style="display: inline-block;">
+                        <a href="{{route('usuarios.editview',['id'=>$usuario['id_usuario']])}}" class="btn btn-warning">Editar</a>
+                        <form action="" method="POST" style="display: inline-block;">
+                            <input type="hidden" value="{{ $usuario['id_usuario'] }}" name="id">
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?')">Eliminar</button>
                         </form>
                     </td>

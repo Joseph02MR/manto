@@ -12,7 +12,7 @@
 @section('content')
 <div class="container">
     <h1>Listado de Máquinas</h1>
-    <a href="{{ route('maquinas.nueva') }}" class="btn btn-primary mb-3">Registrar máquina</a>
+    <a href="{{ route('maquinas.new') }}" class="btn btn-primary mb-3">Registrar máquina</a>
     <br>
     <br>
     <table class="table">
@@ -39,8 +39,12 @@
                     <td>{{$maquina['nombre']}}</td>
                     <td>{{$maquina['depto']}}</td>
                     <td>{{substr($maquina['fecha_anual'], 0,10)}}</td>
-                    <td>¯⁠\_⁠⁠(⁠ツ⁠)_⁠⁠/⁠¯
-                        <!--<a href="" class="btn btn-warning">Editar</a>-->
+                    <td>
+                        <a href="{{route('maquinas.editview',['id'=>$maquina['id_maquina']])}}" class="btn btn-warning">Editar</a>
+                        <form action="" method="POST" style="display: inline-block;">
+                            <input type="hidden" value="{{ $maquina['id_maquina'] }}" name="id">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?')">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
                 @php($renglon++)
