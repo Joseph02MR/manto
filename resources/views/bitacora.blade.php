@@ -10,33 +10,31 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <h1>Bitácora de operaciones</h1>
-    <br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tabla afectada</th>
-                <th>Operación realizada</th>
-                <th>Fecha</th>
-        </thead>
-        <tbody>
-            @php($renglon = 1)
-            @foreach($registros as $registro)
+    <div class="container">
+        <h1>Bitácora de operaciones</h1>
+        <br>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $renglon }}</td>
-                    <td>{{$registro['tabla_afectada']}}</td>
-                    <td>{{$registro['tipo_operacion']}}</td>d>
-                    <td>{{$registro['fecha']}}</td>
-                </tr>
-                @php($renglon++)
-            @endforeach
-        </tbody>
-    </table>
-</div>
-<div class="vertical-padding"></div>
-@endsection
-
-@section('scripts')
+                    <th>ID</th>
+                    <th>Tabla afectada</th>
+                    <th>Operación realizada</th>
+                    <th>Fecha</th>
+            </thead>
+            <tbody>
+                @php($renglon = 1)
+                @foreach ($registros as $registro)
+                    <tr>
+                        <td>{{ $renglon }}</td>
+                        <td>{{ $registro['tabla_afectada'] }}</td>
+                        <td>{{ $registro['tipo_operacion'] }}</td>
+                        <td>{{ $registro['fecha'] }}</td>
+                    </tr>
+                    @php($renglon++)
+                @endforeach
+            </tbody>
+        </table>
+        {{ $registros->links() }}
+    </div>
+    <div class="vertical-padding"></div>
 @endsection

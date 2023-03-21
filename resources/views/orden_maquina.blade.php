@@ -9,10 +9,10 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 @endsection
 @section('content')
-    <div class="container-fluid" style="height: 100vh; padding: 100px">
-        <div class="row">
-            <h1>Orden mantenimiento para la máquina: {{$maquina[0]['no_serie']}}</h1>
-        </div>
+    <div class="container-fluid" style=" padding: 70px">
+        <h1>Orden mantenimiento para la máquina: {{$maquina[0]['no_serie']}}</h1>
+        <br>
+        <br>
         <div class="row">
             <div class="col-sm-6">
                 <div class="row">
@@ -68,7 +68,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-6" style="text-align: end">
-                            <h5>Descripcion:</h5>
+                            <h5>Descripción:</h5>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -123,6 +123,7 @@
                 </div>
             </div>
         </form>
+        
     </div>
 @endsection
 
@@ -131,14 +132,16 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        //const url = 'https://boom-phrygian-sceptre.glitch.me';
+        const url = 'http://localhost:8001';
         $(document).ready(function() {
             $("#btn-cancelar-orden").click(function() {
-                var url = "http://localhost:8000/orden_manto/";
+                var url = "{{route('manto.nuevo')}}";
                 window.location.href = url;
             });
         // Obtener los datos de la API utilizando AJAX
         $.ajax({
-            url: "https://boom-phrygian-sceptre.glitch.me/api/v1/aux/tipo",
+            url: url+"/api/v1/aux/tipo",
             type: "GET",
             success: function(response) {
             // Recorrer los datos y agregarlos al control select

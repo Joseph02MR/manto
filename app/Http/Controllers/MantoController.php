@@ -4,21 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Collection;
 
 class MantoController extends Controller
 {
     private $baseUri;
     private $mantoUri;
-    private $apiUri;
+    private $baseApiUri;
 
     public function __construct()
     {
-        $this->baseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/maquina';
-        $this->mantoUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/manto';
-        $this->apiUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1';
+        //$aux = 'https://boom-phrygian-sceptre.glitch.me';
+        $aux = 'http://localhost:8001';
+        $this->baseUri = $aux.'/api/v1/maquina';
+        $this->mantoUri = $aux.'/api/v1/manto';
+        $this->baseApiUri = $aux . '/api/v1';
     }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
 
     public function levantarOrden($id){
         $response = Http::get($this->baseUri.'/'.$id);
@@ -34,7 +45,7 @@ class MantoController extends Controller
         $piezas = $req->input('piezas');
         $materiales = $req->input('materiales');
         $fecha = $req->input('fecha_mant');
-        $id_resp = 2; //NECESITO QUE ESTE ID SE OBTENGA DE LA SESION
+        $id_resp = session()->get('user')['id_usuario']; 
         $correo= $req->input('email');
         $nombre= $req->input('nombre');
 
@@ -62,7 +73,7 @@ class MantoController extends Controller
            "Atentamente,\n" .
            "El equipo de mantenimiento";
             //Aqui va la logica para mandar un correo xd
-            $response2 = Http::post($this->apiUri.'/email', [
+            $response2 = Http::post($this->baseApiUri.'/email', [
                 'nombre' => $nombre,
                 'correo' => $correo,
                 'asunto' => 'Orden de mantenimiento #'.$response['id_mantenimiento'],
@@ -73,6 +84,34 @@ class MantoController extends Controller
             }
         }
         return redirect('/orden_manto');
+    }
+
+    public function mantos()
+    {
+        $id = session()->get('user');
+        if (isset($id)) {
+            $api_route = $this->baseApiUri . '/manto_view';
+            $response = Http::get($api_route);
+            $mantos = $response->json();
+            $mantos = $this->paginate($mantos, 10);
+            $mantos->setPath('manto');
+            return view('mantenimientos', compact('mantos'));
+        }
+        return redirect()->route('redirect_login');
+    }
+
+    public function update_manto_status(Request $request)
+    {
+        $api_route = $this->baseApiUri . '/manto_status';
+        $response = Http::patch($api_route, [
+            'id' => $request->input('id'),
+            'maquina' => $request->input('maquina')
+        ]);
+        if ($response->status() === 200) {
+            return back()->with('success', 'Actualización realizada');
+        } else {
+            return back()->with('error', 'Actualización fallida');
+        }
     }
     
 }

@@ -63,88 +63,25 @@ class UserController extends Controller
         return redirect()->route('redirect_login');
     }
 
-    public function maquinas()
+    public function store(Request $request)
     {
-        $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/maquina/user/' . $id['id_usuario'];
-            $response = Http::get($api_route);
-            $maquinas = $response->json();
-            return view('maquinas', compact('maquinas'));
-        }
-        return redirect()->route('redirect_login');
+        $response = Http::post($this->baseUri, $request->all());
+
+        return redirect()->route('usuarios');
     }
 
-    public function maquinas_admin()
+    public function update(Request $request)
     {
-        $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/maquina';
-            $response = Http::get($api_route);
-            $maquinas = $response->json();
-            $maquinas = $this->paginate($maquinas, 20);
-            $maquinas->setPath('maquinas');
-            return view('maquinas_admin', compact('maquinas'));
-        }
-        return redirect()->route('redirect_login');
+        $response = Http::put("{$this->baseUri}/{$request->get('id')}", $request->all());
+
+        return redirect()->route('usuarios');
     }
 
-    public function editar_maquina(Request $request)
+    public function destroy(Request $request)
     {
-        $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/departamento';
-            $response = Http::get($api_route);
-            $deptos = $response->json();
+        $response = Http::delete("{$this->baseUri}/{$request->get('id')}");
 
-            if ($request->routeIs('maquinas.editview')) {
-                $api_route = $this->baseApiUri . '/maquina'. '/' . $request->query('id');
-                $response = Http::get($api_route);
-                $maquina = $response->json()['0'];
-            } else {
-                $maquina = null;
-            }
-            return view('AdDevice', compact('deptos', 'maquina'));
-        }
-        return redirect()->route('redirect_login');
-    }
-
-    public function mantos()
-    {
-        $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/manto_view';
-            $response = Http::get($api_route);
-            $mantos = $response->json();
-            return view('mantenimientos', compact('mantos'));
-        }
-        return redirect()->route('redirect_login');
-    }
-
-    public function update_manto_status(Request $request)
-    {
-        $api_route = $this->baseApiUri . '/manto_status';
-        $response = Http::patch($api_route, [
-            'id' => $request->input('id'),
-            'maquina' => $request->input('maquina')
-        ]);
-        if ($response->status() === 200) {
-            return back()->with('success', 'Actualización realizada');
-        } else {
-            return back()->with('error', 'Actualización fallida');
-        }
-    }
-
-    public function bitacora()
-    {
-        $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/bitacora';
-            $response = Http::get($api_route);
-            $registros = $response->json();
-            return view('bitacora', compact('registros'));
-        }
-        return redirect()->route('redirect_login');
+        return redirect()->route('usuarios');
     }
 
     public function login(Request $request)
@@ -173,26 +110,5 @@ class UserController extends Controller
         session()->forget('user');
         session()->forget('permisos');
         return redirect()->route('redirect_login');
-    }
-
-    public function store(Request $request)
-    {
-        $response = Http::post($this->baseUri, $request->all());
-
-        return redirect()->route('usuarios');
-    }
-
-    public function update(Request $request)
-    {
-        $response = Http::put("{$this->baseUri}/{$request->get('id')}", $request->all());
-
-        return redirect()->route('usuarios');
-    }
-
-    public function destroy(Request $request)
-    {
-        $response = Http::delete("{$this->baseUri}/{$request->get('id')}");
-
-        return redirect()->route('usuarios');
     }
 }

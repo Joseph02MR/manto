@@ -34,14 +34,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <select id="select_maquina" class="form-control" name="">
-                                <option>Seleccione una opcion</option>
+                                <option>Seleccione una opción</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="justify-content: right; margin-right: 0">
                     <button id="btn-levantar-orden" class="btn btn-success" type="button" style="margin-right: 15px">Levantar orden</button>
-                    <button class="btn btn-danger" type="button">Cancelar</button>
+                    <button class="btn btn-danger" id="btn-cancel" type="button">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -59,20 +59,26 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script>
+        var url = 'http://localhost:8001';
+        //var url = 'https://boom-phrygian-sceptre.glitch.me';
         $(document).ready(function() {
 
             $("#btn-levantar-orden").click(function() {
                 var id_maquina = $("#select_maquina").val();
                 if (id_maquina !== "") {
-                    var url = "http://localhost:8000/orden_manto/" + id_maquina;
+                    var url = "{{route('manto.nuevo')}}"+"/" + id_maquina;
                     window.location.href = url;
                 } else {
                     alert("Seleccione una maquina");
                 }
             });
+            $("#btn-cancel").click(function() {
+                var url = "{{route('manto')}}";
+                    window.location.href = url;
+            });
         // Obtener los datos de la API utilizando AJAX
         $.ajax({
-            url: "https://boom-phrygian-sceptre.glitch.me/api/v1/departamento",
+            url: url+"/api/v1/departamento",
             type: "GET",
             success: function(response) {
             // Recorrer los datos y agregarlos al control select
@@ -100,7 +106,7 @@
 
         // Llamada AJAX para obtener las máquinas del departamento seleccionado
         $.ajax({
-            url: "https://boom-phrygian-sceptre.glitch.me/api/v1/maquina/depto/" + selectedDeptoId,
+            url: url+"/api/v1/maquina/depto/" + selectedDeptoId,
             type: "GET",
             success: function(response) {
                 // Vaciar el select de máquinas

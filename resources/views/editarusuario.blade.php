@@ -2,11 +2,10 @@
 
 @section('title')
     @if (is_null($usuario))
-    <title>Crear usuario</title>
+        <title>Crear usuario</title>
     @else
-    <title>Editar usuario</title>
+        <title>Editar usuario</title>
     @endif
-    
 @endsection
 
 @section('head')
@@ -36,22 +35,26 @@
             @endif
 
             <label for="departamento">Departamento:</label>
-            <select class="form-control" name="id_departamento">
+            <select class="form-control" id="departamento" name="id_departamento">
                 @foreach ($deptos as $depto)
                     <option @if ($usuario && $depto['id_departamento'] == $usuario['id_departamento']) selected @endif value="{{ $depto['id_departamento'] }}">
                         {{ $depto['departameto'] }}</option>
                 @endforeach
             </select>
 
-            <label for="exampleFormControlInput1">Correo electrónico</label>
-            <input type="email" class="form-control" id="exampleFormControlInput" name="correo"
-                @if ($usuario) value="{{ $usuario['correo'] }}" @endif placeholder="name@example.com">
-
-            <label for="exampleInputEmail1">Nombre</label>
-            <input type="text" class="form-control" id="exampleInputName" name="nombre"
+            <label for="1">Nombre</label>
+            <input type="text" class="form-control" id="1" name="nombre"
                 @if ($usuario) value="{{ $usuario['nombre'] }}" @endif placeholder="Nombre(s) Apellidos">
             <small id="emailHelp" class="form-text text-muted">Introduce el nombre
                 completo.</small>
+
+            <label for="2">Correo electrónico</label>
+            <input type="email" class="form-control" id="2" name="correo"
+                @if ($usuario) value="{{ $usuario['correo'] }}" @endif placeholder="name@example.com">
+
+            <label for="3">Contraseña</label>
+            <input type="password" class="form-control" id="3" name="contrasena"
+                @if ($usuario) value="{{ $usuario['contrasena'] }}" @endif placeholder="pass123">
             <hr>
 
             <input type="submit" class="btn btn-success"

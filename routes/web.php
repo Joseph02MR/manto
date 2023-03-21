@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MantoController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MaquinaController;
+use App\Http\Controllers\SiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,33 +22,31 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('redirect_login');
 
-Route::get('/main', [UserController::class, 'maquinas'])->name('landing');
+Route::get('/main', [MaquinaController::class, 'maquinas'])->name('landing');
 
-Route::get('/maquinas', [UserController::class, 'maquinas_admin'])->name('maquinas.admin');
-Route::get('/maquinas_nueva', [UserController::class, 'editar_maquina'])->name('maquinas.new');
-Route::get('/maquinas_editar', [UserController::class, 'editar_maquina'])->name('maquinas.editview');
-Route::post('/editmaquinas', [UserController::class, 'update_maquina'])->name('maquinas.update');
+Route::get('/maquinas', [MaquinaController::class, 'maquinas_admin'])->name('maquinas.admin');
+Route::get('/maquinas/new', [MaquinaController::class, 'editar_maquina'])->name('maquinas.createview');
+Route::get('/maquinas/edit', [MaquinaController::class, 'editar_maquina'])->name('maquinas.editview');
+Route::post('/maquinas/update', [MaquinaController::class, 'update'])->name('maquinas.update');
+Route::post('/maquinas/delete', [MaquinaController::class, 'destroy'])->name('maquinas.delete');
+Route::post('/maquinas/create', [MaquinaController::class, 'store'])->name('maquinas.new');
 
 Route::get('/test', function () {
     return view('test');
 })->name('test');
 
-Route::get('/manto', [UserController::class, 'mantos'])->name('manto');
-Route::PATCH('/manto', [UserController::class, 'update_manto_status'])->name('manto.status');
+//Rutas para manto
+Route::get('/manto', [MantoController::class, 'mantos'])->name('manto');
+Route::PATCH('/manto', [MantoController::class, 'update_manto_status'])->name('manto.status');
 
 Route::get('/orden_manto', function () {
     return view('orden_mantenimiento');
 })->name('manto.nuevo');
 
-Route::get('/detalles_maquina', function () {
-    return view('detalles_maquina');
-})->name('manto.detalle');
-
-//Rutas para manto
 Route::get('/orden_manto/{id?}', [MantoController::class, 'levantarOrden']);
 Route::post('/orden',[MantoController::class,'sendOrden'])->name('manto.orden');
 
-Route::get('/bitacora', [UserController::class, 'bitacora'])->name('bitacora');
+Route::get('/bitacora', [AdminController::class, 'bitacora'])->name('bitacora');
 
 // TODO: renombrar ruta
 Route::get('/welcome', function () {

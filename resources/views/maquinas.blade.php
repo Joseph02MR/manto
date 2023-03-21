@@ -36,8 +36,8 @@
                     <td>{{$maquina['marca']}}</td>
                     <td>{{$maquina['departameto']}}</td>
                     <td>{{substr($maquina['fecha_anual'], 0,10)}}</td>
-                    <td>¯⁠\_⁠⁠(⁠ツ⁠)_⁠⁠/⁠¯
-                        <!--<a href="" class="btn btn-warning">Editar</a>-->
+                    <td>
+                        ¯⁠\_⁠⁠(⁠ツ⁠)_⁠⁠/⁠¯
                     </td>
                 </tr>
                 @php($renglon++)

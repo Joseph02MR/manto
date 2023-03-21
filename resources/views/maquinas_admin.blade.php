@@ -11,8 +11,10 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h1>Listado de Máquinas</h1>
-    <a href="{{ route('maquinas.new') }}" class="btn btn-primary mb-3">Registrar máquina</a>
+    <br>
+    <a href="{{ route('maquinas.createview') }}" class="btn btn-primary mb-3">Registrar máquina</a>
     <br>
     <br>
     <table class="table">
@@ -41,7 +43,8 @@
                     <td>{{substr($maquina['fecha_anual'], 0,10)}}</td>
                     <td>
                         <a href="{{route('maquinas.editview',['id'=>$maquina['id_maquina']])}}" class="btn btn-warning">Editar</a>
-                        <form action="" method="POST" style="display: inline-block;">
+                        <form action="{{route('maquinas.delete')}}" method="POST" style="display: inline-block;">
+                            @csrf
                             <input type="hidden" value="{{ $maquina['id_maquina'] }}" name="id">
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?')">Eliminar</button>
                         </form>
@@ -54,7 +57,4 @@
     {{ $maquinas->links() }}
 </div>
 <div class="vertical-padding"></div>
-@endsection
-
-@section('scripts')
 @endsection
