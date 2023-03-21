@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MantoController;
 use App\Http\Controllers\AdminController;
 
 /*
@@ -40,6 +41,10 @@ Route::get('/orden_manto', function () {
 Route::get('/detalles_maquina', function () {
     return view('detalles_maquina');
 })->name('manto.detalle');
+
+//Rutas para manto
+Route::get('/orden_manto/{id?}', [MantoController::class, 'levantarOrden']);
+Route::post('/orden',[MantoController::class,'sendOrden'])->name('manto.orden');
 
 Route::get('/bitacora', [UserController::class, 'bitacora'])->name('bitacora');
 
