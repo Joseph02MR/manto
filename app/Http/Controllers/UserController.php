@@ -36,8 +36,6 @@ class UserController extends Controller
         if (isset($id)) {
             $response = Http::get($this->baseUri);
             $usuarios = $response->json();
-            $usuarios = $this->paginate($usuarios, 10);
-            $usuarios->setPath('usuarios');
             return view('usuarios', compact('usuarios'));
         }
         return redirect()->route('redirect_login');

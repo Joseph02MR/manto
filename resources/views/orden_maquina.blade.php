@@ -5,9 +5,9 @@
 @endsection
 
 @section('head')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
 @endsection
+
 @section('content')
     <div class="container-fluid" style=" padding: 70px">
         <h1>Orden mantenimiento para la máquina: {{$maquina[0]['no_serie']}}</h1>

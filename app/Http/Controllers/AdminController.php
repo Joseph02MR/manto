@@ -51,8 +51,6 @@ class AdminController extends Controller
             $api_route = $this->baseApiUri . '/bitacora';
             $response = Http::get($api_route);
             $registros = $response->json();
-            $registros = $this->paginate($registros, 10);
-            $registros->setPath('bitacora');
             return view('bitacora', compact('registros'));
         }
         return redirect()->route('redirect_login');

@@ -96,15 +96,6 @@
                         <a href="#">Scanfcode</a>.
                     </p>
                 </div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <ul class="social-icons">
-                      <li><a class="facebook" href="#"><img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/facebook-512.png"></a></li>
-                      <li><a class="twitter" href="#"><img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/twitter-512.png"></a></li>
-                      <li><a class="dribbble" href="#"><img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/dribbble-512.png"></a></li>
-                      <li><a class="linkedin" href="#"><img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/linkedin-512.png"></a></li>
-                    </ul>
-                  </div>
             </div>
         </div>
     </footer>

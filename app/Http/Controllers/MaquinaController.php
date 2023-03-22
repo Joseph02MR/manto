@@ -45,8 +45,6 @@ class MaquinaController extends Controller
             $api_route = $this->baseApiUri . '/maquina';
             $response = Http::get($api_route);
             $maquinas = $response->json();
-            $maquinas = $this->paginate($maquinas, 20);
-            $maquinas->setPath('maquinas');
             return view('maquinas_admin', compact('maquinas'));
         }
         return redirect()->route('redirect_login');

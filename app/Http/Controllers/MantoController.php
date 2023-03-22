@@ -93,8 +93,6 @@ class MantoController extends Controller
             $api_route = $this->baseApiUri . '/manto_view';
             $response = Http::get($api_route);
             $mantos = $response->json();
-            $mantos = $this->paginate($mantos, 10);
-            $mantos->setPath('manto');
             return view('mantenimientos', compact('mantos'));
         }
         return redirect()->route('redirect_login');
