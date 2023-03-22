@@ -14,6 +14,9 @@ class MantoController extends Controller
     private $mantoUri;
     private $baseApiUri;
 
+
+
+
     public function __construct()
     {
         //$aux = 'https://boom-phrygian-sceptre.glitch.me';
@@ -96,6 +99,11 @@ class MantoController extends Controller
             return view('mantenimientos', compact('mantos'));
         }
         return redirect()->route('redirect_login');
+    }
+
+    public function maintenance()
+    {
+        return view('maintenance');
     }
 
     public function update_manto_status(Request $request)
