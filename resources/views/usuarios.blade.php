@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="height: 130vh; padding-top: 50px">
         <h1>Usuarios</h1>
         <a href="{{ route('usuarios.createview') }}" class="btn btn-primary mb-3">Nuevo usuario</a>
         <table class="table">

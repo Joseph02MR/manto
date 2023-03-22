@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="padding-top: 50px; height: 100vh;">
         <h1>Mantenimientos</h1>
         @php
             $is_manto = false;
@@ -29,7 +29,7 @@
             @if ($is_manto)
                 <a href="{{ route('manto.nuevo') }}" class="btn btn-primary mb-3">Nuevo mantenimiento</a>
             @endif
-            <button class="btn btn-primary mb-3" id="btn_filter" value="all" onclick="filterMantos()">Filtrar por
+            <button style="margin-left: 15px" class="btn btn-primary mb-3" id="btn_filter" value="all" onclick="filterMantos()">Filtrar por
                 pendientes</button>
         </div>
 
