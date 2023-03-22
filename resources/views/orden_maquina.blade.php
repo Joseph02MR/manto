@@ -93,21 +93,12 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-6" style="text-align: end">
-                            <h5>Piezas:</h5>
+                            <h5>Responsable:</h5>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input name="piezas" class="form-control" type="text" placeholder="Default input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6" style="text-align: end">
-                            <h5>Materiales:</h5>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input name="materiales" class="form-control" type="text" placeholder="Default input">
+                                <select id="select_resp" class="form-control" name="id_tipo">
+                                </select>
                             </div>
                         </div>
                     </div>
