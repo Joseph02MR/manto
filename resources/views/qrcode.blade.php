@@ -7,7 +7,8 @@
 	<title>Departamento QR</title>
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="text-align: center; padding-top: 250px">
+		<h1>Escanea el QR para generar tu PDF</h1>
         {{print_r($qr)}}
 	</div>
 </body>
