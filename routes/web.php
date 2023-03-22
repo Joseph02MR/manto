@@ -73,3 +73,5 @@ Route::post('/login', [UserController::class, 'login'])->name('usuarios.login');
 Route::get('/logout',[UserController::class, 'logout'])->name('logout');
 
 Route::get('/qr/{id?}', [AdminController::class, 'getqr'])->name('getqrs');
+
+Route::get('/maintenance', [MantoController::class, 'maintenance'])->name('maintenance');
