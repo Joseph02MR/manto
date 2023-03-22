@@ -16,7 +16,8 @@
 
 @section('content')
     <div class="container" style="padding-top: 50px; height: 100vh;">
-        <h1>Mantenimientos</h1>
+        <h1>Mantenimientos asignados a: {{$mantos[0]['responsable']}} </h1>
+
         @php
             $is_manto = false;
             $permisos = is_array(session('permisos')) ? session('permisos') : [session('permisos')];
