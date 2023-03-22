@@ -16,7 +16,7 @@
 
 @section('content')
     <div class="container" style="padding-top: 50px; height: 100vh;">
-        <h1>Mantenimientos asignados a: {{$mantos[0]['responsable']}} </h1>
+        <h1>Mantenimientos @if($mantos!=null&&session()->get('permisos')!='admin') asignados a: {{ $mantos[0]['responsable'] }} @endif </h1>
 
         @php
             $is_manto = false;
@@ -70,7 +70,7 @@
                             @if ($is_manto && $manto['status'] == 'Pendiente')
                                 <button id="finalizar_{{ $manto['id_mantenimiento'] }}" class="btn btn-primary mb-3"
                                     onclick="updateStatus({{ $manto['id_mantenimiento'] }},{{ $manto['id_maquina'] }})">finalizado</button>
-                                <a href="{{ route('manto', ['id' => $manto['id_maquina']]) }}"
+                                <a href="{{ route('maintenance', ['id' => $manto['id_maquina']]) }}"
                                     class="btn btn-warning">Editar</a>
                             @endif
                         </td>

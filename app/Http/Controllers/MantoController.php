@@ -92,8 +92,13 @@ class MantoController extends Controller
     public function mantos()
     {
         $id = session()->get('user');
-        if (isset($id)) {
-            $api_route = $this->baseApiUri . '/manto_view';
+        $permiso=session()->get('permisos');
+        if (isset($id)&&isset($permiso)) {
+            if($permiso=='manto'){
+                $api_route = $this->baseApiUri . '/manto/responsable/'.$id['id_usuario'];
+            }else{
+                $api_route = $this->baseApiUri . '/manto_view';
+            }
             $response = Http::get($api_route);
             $mantos = $response->json();
             return view('mantenimientos', compact('mantos'));

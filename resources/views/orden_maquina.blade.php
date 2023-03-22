@@ -151,6 +151,27 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
             console.log(xhr.responseText);
             }
         });
+
+        $.ajax({
+            url: url+"/api/v1/usuario/depto/4",
+            type: "GET",
+            success: function(response) {
+            // Recorrer los datos y agregarlos al control select
+            for (var i = 0; i < response.length; i++) {
+                $("#select_resp").append(
+                "<option value='" +
+                    response[i].id_usuario +
+                    "'>" +
+                    response[i].nombre +
+                    "</option>"
+                );
+            }
+            },
+            error: function(xhr) {
+            console.log(xhr.responseText);
+            }
+        });
+
     });
     </script>
 @endsection
