@@ -50,6 +50,11 @@
         @endforeach
 
     </div>
+
+    <div class="text-center vertical-padding">
+        <h1>{{'Hola, '.session('user')['nombre']}}</h1>
+    </div>
+
     @yield('content')
 
     <footer class="site-footer">

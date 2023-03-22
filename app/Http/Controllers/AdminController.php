@@ -18,7 +18,7 @@ class AdminController extends Controller
         //$aux = 'https://boom-phrygian-sceptre.glitch.me';
         $aux = 'http://localhost:8001';
         $this->baseUri = $aux . '/api/v1/qr/';
-        $this->SbaseUri = $aux . '/api/v1/usuario/report/';
+        $this->SbaseUri = 'https://boom-phrygian-sceptre.glitch.me/api/v1/usuario/report/';
         $this->baseApiUri = $aux . '/api/v1';
     }
 

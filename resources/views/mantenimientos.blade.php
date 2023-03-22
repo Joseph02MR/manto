@@ -27,7 +27,7 @@
             }
         @endphp
         <div class="col-sm-6">
-            @if ($is_manto)
+            @if (!$is_manto)
                 <a href="{{ route('manto.nuevo') }}" class="btn btn-primary mb-3">Nuevo mantenimiento</a>
             @endif
             <button style="margin-left: 15px" class="btn btn-primary mb-3" id="btn_filter" value="all"
@@ -68,10 +68,9 @@
                         <td>
                             @if ($is_manto && $manto['status'] == 'Pendiente')
                                 <button id="finalizar_{{ $manto['id_mantenimiento'] }}" class="btn btn-primary mb-3"
-                                    onclick="updateStatus({{ $manto['id_mantenimiento'] }},{{ $manto['id_maquina'] }})">Marcar
-                                    finalizado</button>
-                            @else
-                                ¯⁠\_⁠⁠(⁠ツ⁠)_⁠⁠/⁠¯
+                                    onclick="updateStatus({{ $manto['id_mantenimiento'] }},{{ $manto['id_maquina'] }})">finalizado</button>
+                                <a href="{{ route('manto', ['id' => $manto['id_maquina']]) }}"
+                                    class="btn btn-warning">Editar</a>
                             @endif
                         </td>
                     </tr>
