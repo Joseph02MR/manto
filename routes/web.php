@@ -38,6 +38,8 @@ Route::get('/test', function () {
 //Rutas para manto
 Route::get('/manto', [MantoController::class, 'mantos'])->name('manto');
 Route::PATCH('/manto', [MantoController::class, 'update_manto_status'])->name('manto.status');
+Route::get('/maintenance', [MantoController::class, 'maintenance'])->name('maintenance');
+Route::post('/manto_contenido', [MantoController::class, 'update_manto_content'])->name('manto_content');
 
 Route::get('/orden_manto', function () {
     return view('orden_mantenimiento');
@@ -73,5 +75,3 @@ Route::post('/login', [UserController::class, 'login'])->name('usuarios.login');
 Route::get('/logout',[UserController::class, 'logout'])->name('logout');
 
 Route::get('/qr/{id?}', [AdminController::class, 'getqr'])->name('getqrs');
-
-Route::get('/maintenance', [MantoController::class, 'maintenance'])->name('maintenance');

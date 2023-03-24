@@ -89,21 +89,8 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                         </div>
                     </div>
                 </div>
-                <!--Col derecha -->
-                <div class="col-sm-6">
-                    <div class="row">
-                        <div class="col-sm-6" style="text-align: end">
-                            <h5>Responsable:</h5>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select id="select_resp" class="form-control" name="id_tipo">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="id_responsable" value="1">
+                <div class="col-sm-6"></div>
+                <input type="hidden" name="id_responsable" value="49">
                 <input type="hidden" name="id_maquina" value="{{$maquina[0]['id_maquina']}}">
                 <input type="hidden" name="fecha_mant" value="{{ date('Y-m-d') }}">
                 <input type="hidden" name="email" value="{{ $maquina[0]['correo'] }}">
@@ -143,26 +130,6 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                     response[i].id_tipo +
                     "'>" +
                     response[i].tipo +
-                    "</option>"
-                );
-            }
-            },
-            error: function(xhr) {
-            console.log(xhr.responseText);
-            }
-        });
-
-        $.ajax({
-            url: url+"/api/v1/usuario/depto/4",
-            type: "GET",
-            success: function(response) {
-            // Recorrer los datos y agregarlos al control select
-            for (var i = 0; i < response.length; i++) {
-                $("#select_resp").append(
-                "<option value='" +
-                    response[i].id_usuario +
-                    "'>" +
-                    response[i].nombre +
                     "</option>"
                 );
             }

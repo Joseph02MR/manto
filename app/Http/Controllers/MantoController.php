@@ -21,8 +21,8 @@ class MantoController extends Controller
     {
         //$aux = 'https://boom-phrygian-sceptre.glitch.me';
         $aux = 'http://localhost:8001';
-        $this->baseUri = $aux.'/api/v1/maquina';
-        $this->mantoUri = $aux.'/api/v1/manto';
+        $this->baseUri = $aux . '/api/v1/maquina';
+        $this->mantoUri = $aux . '/api/v1/manto';
         $this->baseApiUri = $aux . '/api/v1';
     }
 
@@ -34,13 +34,15 @@ class MantoController extends Controller
     }
 
 
-    public function levantarOrden($id){
-        $response = Http::get($this->baseUri.'/'.$id);
+    public function levantarOrden($id)
+    {
+        $response = Http::get($this->baseUri . '/' . $id);
         $maquina = $response->json();
         return view('orden_maquina', ['maquina' => $maquina]);
     }
-    
-    public function sendOrden(Request $req){
+
+    public function sendOrden(Request $req)
+    {
         $id_usuario = $req->input('id_usuario');
         $desc = $req->input('descripcion');
         $id_tipo = $req->input('id_tipo');
@@ -48,11 +50,11 @@ class MantoController extends Controller
         $piezas = $req->input('piezas');
         $materiales = $req->input('materiales');
         $fecha = $req->input('fecha_mant');
-        $id_resp = session()->get('user')['id_usuario']; 
-        $correo= $req->input('email');
-        $nombre= $req->input('nombre');
+        $id_resp = session()->get('user')['id_usuario'];
+        $correo = $req->input('email');
+        $nombre = $req->input('nombre');
 
-        $response = Http::post($this->mantoUri.'/orden', [
+        $response = Http::post($this->mantoUri . '/orden', [
             'descripcion' => $desc,
             'id_tipo' => $id_tipo,
             'id_maquina' => $id_maquina,
@@ -62,27 +64,25 @@ class MantoController extends Controller
             'id_responsable' => $id_resp,
             'id_usuario' => $id_usuario,
         ]);
-        if($response->status()==200){
-           $mensaje = "Estimado(a) " . $nombre . ", \n\n" .
-           "Le informamos que se ha recibido su solicitud de orden de mantenimiento #". $response['id_mantenimiento'] . ", la cual será atendida a la brevedad posible. A continuación se muestra un resumen de los detalles de la orden de mantenimiento:\n\n" .
-           "Descripción: " . $desc . "\n" .
-           "Tipo: " . $id_tipo . "\n" .
-           "Máquina: " . $id_maquina . "\n" .
-           "Piezas: " . $piezas . "\n" .
-           "Materiales: " . $materiales . "\n" .
-           "Fecha de solicitud: " . $fecha . "\n\n" .
-           "Le recordamos que, si tiene alguna duda o necesita hacer alguna modificación a la orden de mantenimiento, puede comunicarse con nosotros a través del correo electrónico " . 'notificaciones.manto@gmail.com' . ".\n\n" .
-           "Agradecemos su colaboración y confianza.\n\n" .
-           "Atentamente,\n" .
-           "El equipo de mantenimiento";
+        if ($response->status() == 200) {
+            $mensaje = "Estimado(a) " . $nombre . ", \n\n" .
+                "Le informamos que se ha recibido su solicitud de orden de mantenimiento #" . $response['id_mantenimiento'] . ", la cual será atendida a la brevedad posible. A continuación se muestra un resumen de los detalles de la orden de mantenimiento:\n\n" .
+                "Descripción: " . $desc . "\n" .
+                "Tipo: " . $id_tipo . "\n" .
+                "Máquina: " . $id_maquina . "\n" .
+                "Fecha de solicitud: " . $fecha . "\n\n" .
+                "Le recordamos que, si tiene alguna duda o necesita hacer alguna modificación a la orden de mantenimiento, puede comunicarse con nosotros a través del correo electrónico " . 'notificaciones.manto@gmail.com' . ".\n\n" .
+                "Agradecemos su colaboración y confianza.\n\n" .
+                "Atentamente,\n" .
+                "El equipo de mantenimiento";
             //Aqui va la logica para mandar un correo xd
-            $response2 = Http::post($this->baseApiUri.'/email', [
+            $response2 = Http::post($this->baseApiUri . '/email', [
                 'nombre' => $nombre,
                 'correo' => $correo,
-                'asunto' => 'Orden de mantenimiento #'.$response['id_mantenimiento'],
+                'asunto' => 'Orden de mantenimiento #' . $response['id_mantenimiento'],
                 'mensaje' => $mensaje,
             ]);
-            if($response->status()==200){
+            if ($response->status() == 200) {
                 session()->flash('success', 'El correo electrónico se envió correctamente');
             }
         }
@@ -92,11 +92,11 @@ class MantoController extends Controller
     public function mantos()
     {
         $id = session()->get('user');
-        $permiso=session()->get('permisos');
-        if (isset($id)&&isset($permiso)) {
-            if($permiso=='manto'){
-                $api_route = $this->baseApiUri . '/manto/responsable/'.$id['id_usuario'];
-            }else{
+        $permiso = session()->get('permisos');
+        if (isset($id) && isset($permiso)) {
+            if ($permiso == 'manto') {
+                $api_route = $this->baseApiUri . '/manto/responsable/' . $id['id_usuario'];
+            } else {
                 $api_route = $this->baseApiUri . '/manto_view';
             }
             $response = Http::get($api_route);
@@ -106,9 +106,13 @@ class MantoController extends Controller
         return redirect()->route('redirect_login');
     }
 
-    public function maintenance()
+    public function maintenance(Request $request)
     {
-        return view('maintenance');
+        $aux = $request->query('id');
+        $api_route = $this->mantoUri . '/' . $aux;
+        $response = Http::get($api_route);
+        $manto = $response->json()[0];
+        return view('maintenance', compact(['aux', 'manto']));
     }
 
     public function update_manto_status(Request $request)
@@ -124,5 +128,26 @@ class MantoController extends Controller
             return back()->with('error', 'Actualización fallida');
         }
     }
-    
+
+    public function update_manto_content(Request $request)
+    {
+        $api_route = $this->baseApiUri . '/manto_content';
+        if ($request->has('type')) {
+            $response = Http::patch($api_route, [
+                'id' => $request->input('id'),
+                'descripcion' => $request->input('descripcion'),
+                'id_responsable' => $request->input('id_responsable'),
+                'type' => $request->input('type')
+            ]);
+        } else {
+            $response = Http::patch($api_route, [
+                'id' => $request->input('id'),
+                'piezas' => $request->input('piezas'),
+                'materiales' => $request->input('materiales'),
+                'observaciones' => $request->input('observaciones')
+            ]);
+        }
+
+        return redirect()->route('manto');
+    }
 }

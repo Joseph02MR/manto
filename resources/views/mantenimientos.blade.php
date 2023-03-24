@@ -16,7 +16,10 @@
 
 @section('content')
     <div class="container" style="padding-top: 50px; height: 100vh;">
-        <h1>Mantenimientos @if($mantos!=null&&session()->get('permisos')!='admin') asignados a: {{ $mantos[0]['responsable'] }} @endif </h1>
+        <h1>Mantenimientos @if ($mantos != null && session()->get('permisos') != 'admin')
+                asignados a: {{ $mantos[0]['responsable'] }}
+            @endif
+        </h1>
 
         @php
             $is_manto = false;
@@ -54,29 +57,35 @@
                 </tr>
             </thead>
             <tbody>
-                @php($renglon = 1)
-                @foreach ($mantos as $manto)
-                    <tr class="js-row">
-                        <td>{{ $renglon }}</td>
-                        <td>{{ $manto['descripcion'] }}</td>
-                        <td>{{ $manto['tipo'] }}</td>
-                        <td>{{ $manto['no_serie'] }}</td>
-                        <td>{{ $manto['piezas'] }}</td>
-                        <td>{{ $manto['materiales'] }}</td>
-                        <td>{{ substr($manto['fecha_mant'], 0, 10) }}</td>
-                        <td>{{ $manto['responsable'] }}</td>
-                        <td>{{ $manto['status'] }}</td>
-                        <td>
-                            @if ($is_manto && $manto['status'] == 'Pendiente')
-                                <button id="finalizar_{{ $manto['id_mantenimiento'] }}" class="btn btn-primary mb-3"
-                                    onclick="updateStatus({{ $manto['id_mantenimiento'] }},{{ $manto['id_maquina'] }})">finalizado</button>
-                                <a href="{{ route('maintenance', ['id' => $manto['id_maquina']]) }}"
-                                    class="btn btn-warning">Editar</a>
-                            @endif
-                        </td>
-                    </tr>
-                    @php($renglon++)
-                @endforeach
+                @if (!is_null($mantos))
+                    @php($renglon = 1)
+                    @foreach ($mantos as $manto)
+                        <tr class="js-row">
+                            <td>{{ $renglon }}</td>
+                            <td>{{ $manto['descripcion'] }}</td>
+                            <td>{{ $manto['tipo'] }}</td>
+                            <td>{{ $manto['no_serie'] }}</td>
+                            <td>{{ $manto['piezas'] }}</td>
+                            <td>{{ $manto['materiales'] }}</td>
+                            <td>{{ substr($manto['fecha_mant'], 0, 10) }}</td>
+                            <td>{{ $manto['responsable'] }}</td>
+                            <td>{{ $manto['status'] }}</td>
+                            <td>
+                                @if ($is_manto && $manto['status'] == 'Pendiente')
+                                    <button id="finalizar_{{ $manto['id_mantenimiento'] }}" class="btn btn-primary mb-3"
+                                        onclick="updateStatus({{ $manto['id_mantenimiento'] }},{{ $manto['id_maquina'] }})">Finalizado</button>
+                                        <a style="margin-bottom: 16px" href="{{ route('maintenance', ['id' => $manto['id_mantenimiento']]) }}"
+                                            class="btn btn-warning">Editar</a>
+                                @endif
+                                @if (!$is_manto && $manto['status'] == 'Pendiente')
+                                    <a  href="{{ route('maintenance', ['id' => $manto['id_mantenimiento']]) }}"
+                                        class="btn btn-warning">Editar</a>
+                                @endif
+                            </td>
+                        </tr>
+                        @php($renglon++)
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>
